@@ -1,0 +1,1353 @@
+/* ══════════════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════════════ */
+:root {
+  --color-bg:          #faf7f2;
+  --color-bg-alt:      #f3ede3;
+  --color-gold:        #b8924a;
+  --color-gold-light:  #d4aa6a;
+  --color-text:        #2c2416;
+  --color-text-muted:  #7a6a52;
+  --color-white:       #ffffff;
+
+  --font-serif:        'Cormorant Garamond', Georgia, serif;
+  --font-sans:         'Montserrat', Arial, sans-serif;
+
+  --transition-base:   0.35s ease;
+
+  /* envelope palette — deep crimson */
+  --env-pocket:        #7a0c0c;   /* base pocket — rich crimson    */
+  --env-fold-l:        #5e0909;   /* left fold — darker shadow     */
+  --env-fold-r:        #8f1414;   /* right fold — slightly lighter */
+  --env-fold-b:        #6b0b0b;   /* bottom fold                   */
+  --env-flap-face:     #8c1010;   /* outer face of flap            */
+  --env-flap-back:     #a82020;   /* inner face — warm reveal      */
+  --env-card:          #fffdf9;   /* the letter card stays ivory   */
+}
+
+
+/* ══════════════════════════════════════════════════════
+   RESET
+══════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   INTRO OVERLAY
+══════════════════════════════════════════════════════ */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  /* dark maroon fallback — matches the image edge colour on wide screens */
+  background-color: #1a0002;
+  background-image: url('images/envelope_page_bg.jpeg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  /* mobile (portrait viewport): cover fills the screen perfectly */
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-bottom: 10vh;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   ENVELOPE
+══════════════════════════════════════════════════════ */
+
+/*
+ * .env-shadow wraps the envelope to hold the drop-shadow filter.
+ * Keeping filter OFF .env is critical — a filter on a 3D ancestor
+ * forces all descendants into a flat stacking context, which breaks
+ * backface-visibility and clip-path + rotateX on the flap.
+ */
+.env-shadow {
+  filter: drop-shadow(0 10px 32px rgba(80, 8, 8, 0.32))
+          drop-shadow(0  3px 10px rgba(80, 8, 8, 0.18));
+}
+
+/* sizing via CSS variables so every child can reference them */
+.env {
+  --w: min(76vw, 300px);
+  --h: calc(var(--w) * 0.64);   /* ~standard DL envelope ratio   */
+
+  position: relative;
+  width:  var(--w);
+  height: var(--h);
+  cursor: pointer;
+
+  /* idle floating animation while waiting for tap */
+  animation: env-float 3.2s ease-in-out infinite;
+}
+
+@keyframes env-float {
+  0%, 100% { transform: translateY(0);     }
+  50%       { transform: translateY(-7px); }
+}
+
+/* ── shared full-size layer base ── */
+.env__pocket,
+.env__fold,
+.env__card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── back pocket (base rectangle) ── */
+.env__pocket {
+  background: var(--env-pocket);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+/* ── fold triangles ──
+   Each fold is a full-size div clipped to a triangle.
+   All four folds (left + right + bottom + top/flap) meeting
+   at the centre (50% 50%) tile the entire rectangle perfectly
+   with zero gaps or overlaps.
+   z:2 — ABOVE the card (z:1) so card is hidden inside.
+*/
+.env__fold {
+  z-index: 2;
+}
+
+/* left fold: top-left → centre → bottom-left */
+.env__fold--l {
+  background: var(--env-fold-l);
+  clip-path: polygon(0% 0%, 50% 50%, 0% 100%);
+}
+
+/* right fold: top-right → centre → bottom-right */
+.env__fold--r {
+  background: var(--env-fold-r);
+  clip-path: polygon(100% 0%, 50% 50%, 100% 100%);
+}
+
+/* bottom fold: bottom-left → centre → bottom-right */
+.env__fold--b {
+  background: var(--env-fold-b);
+  clip-path: polygon(0% 100%, 50% 50%, 100% 100%);
+}
+
+/* ── invitation card (the letter inside) ──
+   z:1 — behind all folds, so it's hidden until the flap opens
+   and the card slides up out of the envelope top.
+*/
+.env__card {
+  z-index: 1;
+  background: var(--env-card);
+  /* inset so it looks like a card sitting inside the pocket */
+  inset: 6% 10%;
+  width: 80%;
+  height: 88%;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  box-shadow: 0 2px 12px rgba(80, 8, 8, 0.18);
+}
+
+.env__card-pre {
+  font-family: var(--font-sans);
+  font-size: clamp(0.42rem, 1.2vw, 0.52rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.env__card-names {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  font-weight: 300;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.env__card-names em {
+  color: var(--color-gold);
+  font-style: italic;
+  margin: 0 0.15em;
+}
+
+.env__card-year {
+  font-family: var(--font-sans);
+  font-size: clamp(0.42rem, 1.2vw, 0.52rem);
+  letter-spacing: 0.25em;
+  color: var(--color-gold);
+  margin-top: 0.3em;
+}
+
+/*
+ * ── top flap (animates open) ──
+ *
+ * Single element — no children. The triangle clip-path lives here
+ * directly, and GSAP animates it with an inline transformPerspective
+ * so the perspective is owned by the element itself, not a parent.
+ * This avoids the filter / preserve-3d flattening conflict entirely.
+ *
+ * Rotation: rotateX(-180deg) with transform-origin:top-center folds
+ * the flap BACKWARD (tip moves away from viewer), exactly like a real
+ * envelope opening. backface-visibility:hidden hides it once it passes
+ * 90°, and an overlapping opacity tween in the timeline reinforces this
+ * on older WebKit.
+ */
+.env__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;          /* bottom edge = horizontal centre of envelope */
+  z-index: 3;
+  transform-origin: top center;
+
+  background: var(--env-flap-face);
+  /* triangle: top-left → top-right → bottom-centre (= envelope centre) */
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+
+  /* backface-visibility intentionally omitted — the flap only rotates
+     to -90° (edge-on) then fades, so it stays fully visible throughout
+     the fold and never shows its backface */
+}
+
+/* ── wax seal ──
+   Centred on the fold line (50% 50%), z:4 on top of everything.
+   Scales to zero when the animation starts.
+*/
+.env__seal {
+  position: absolute;
+  top:  50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+
+  width:  clamp(30px, 9vw, 38px);
+  height: clamp(30px, 9vw, 38px);
+  border-radius: 50%;
+  background: #d4a843;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0  2px  8px rgba(80, 8, 8, 0.35),
+    0  0   0  2px rgba(212, 168, 67, 0.5);
+
+  /* ripple pulse to invite interaction */
+  animation: seal-pulse 2.4s ease-in-out infinite;
+}
+
+.env__seal-icon {
+  color: #fff;
+  font-size: clamp(0.6rem, 2vw, 0.75rem);
+}
+
+@keyframes seal-pulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(80,8,8,0.35), 0 0 0  2px rgba(212,168,67,0.5); }
+  50%       { box-shadow: 0 2px 8px rgba(80,8,8,0.35), 0 0 0 10px rgba(212,168,67,0);   }
+}
+
+/* ── "tap to open" hint ── */
+.env__hint {
+  font-family: var(--font-sans);
+  font-size: clamp(0.55rem, 1.6vw, 0.65rem);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #7a6458;
+  animation: hint-fade 2.2s ease-in-out infinite;
+}
+
+@keyframes hint-fade {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1;    }
+}
+
+/* ── skip button ── */
+.env__skip {
+  position: absolute;
+  bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
+  right: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 235, 190, 0.75);
+  opacity: 0.55;
+  padding: 0.5rem;
+  transition: opacity var(--transition-base);
+}
+
+.env__skip:hover { opacity: 1; }
+
+
+/* ══════════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  transition: background var(--transition-base), backdrop-filter var(--transition-base);
+}
+
+.site-nav.scrolled {
+  background: rgba(250, 247, 242, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+
+.site-nav a {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.site-nav a:hover { color: var(--color-gold); }
+
+
+/* ══════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(184, 146, 74, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(184, 146, 74, 0.06) 0%, transparent 60%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  opacity: 0; /* revealed by JS after envelope closes */
+}
+
+.hero__prelude {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.hero__prelude--son {
+  font-size: 0.8rem;
+}
+
+.hero__names {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero__ganpati {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+.hero__parents {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.hero__name {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #1a100a;
+}
+
+.hero__ampersand {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  font-style: italic;
+  color: #8a6020;
+  line-height: 1;
+  margin-top: 0.2em;
+}
+
+/* date */
+.hero__date {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: #8a6020;
+}
+
+.hero__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.hero__divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-light), transparent);
+}
+
+.hero__divider-icon {
+  font-size: 0.65rem;
+  color: var(--color-gold);
+}
+
+.hero__tagline {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-weight: 500;
+  font-style: italic;
+  color: #2c2416;
+  line-height: 1.8;
+}
+
+.hero__cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 2.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #6b4a10;
+  text-decoration: none;
+  border: 1px solid var(--color-gold);
+  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+
+.hero__cta:hover {
+  background: var(--color-gold);
+  color: var(--color-white);
+}
+
+/* 5-second nudge: beige highlight + shake */
+@keyframes cta-shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-5px); }
+  30%       { transform: translateX(5px); }
+  45%       { transform: translateX(-3px); }
+  60%       { transform: translateX(3px); }
+  75%       { transform: translateX(-1px); }
+  90%       { transform: translateX(1px); }
+}
+
+.hero__cta--nudge {
+  background: #f5ead6;
+  color: #6b4a10;
+  border-color: #b8924a;
+  animation: cta-shake 0.7s ease-in-out;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   CORNER FLOURISHES
+══════════════════════════════════════════════════════ */
+.corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.35;
+}
+
+.corner::before,
+.corner::after {
+  content: '';
+  position: absolute;
+  background: var(--color-gold-light);
+}
+
+.corner::before { width: 1px; height: 100%; }
+.corner::after  { width: 100%; height: 1px; }
+
+.corner--tl { top: 2rem;    left: 2rem;    }
+.corner--tr { top: 2rem;    right: 2rem;   transform: scaleX(-1);  }
+.corner--bl { bottom: 2rem; left: 2rem;    transform: scaleY(-1);  }
+.corner--br { bottom: 2rem; right: 2rem;   transform: scale(-1);   }
+
+
+/* ══════════════════════════════════════════════════════
+   CEREMONY SECTION
+══════════════════════════════════════════════════════ */
+.ceremony {
+  position: relative;
+  --ceremony-meet-overlap: clamp(32px, 8vw, 76px);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4.25rem 1.35rem 2rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(255, 250, 240, 0.94) 0%, transparent 42%),
+    radial-gradient(ellipse at 50% 100%, rgba(184, 146, 74, 0.08) 0%, transparent 62%),
+    var(--color-bg-alt);
+}
+
+.ceremony__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ceremony__stage::before,
+.ceremony__stage::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.ceremony__stage::before {
+  bottom: clamp(6.1rem, 12vh, 7.5rem);
+  width: min(900px, 88vw);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(184, 146, 74, 0.46), transparent);
+}
+
+.ceremony__stage::after {
+  bottom: clamp(5.65rem, 10vh, 6.8rem);
+  width: min(720px, 76vw);
+  height: clamp(20px, 5vh, 42px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(184, 146, 74, 0.18) 0%, transparent 68%);
+  filter: blur(6px);
+  opacity: 0.8;
+}
+
+.ceremony__glow {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(9.2rem, 18vh, 11rem);
+  width: min(560px, 64vw);
+  height: min(560px, 64vw);
+  border: 1px solid rgba(184, 146, 74, 0.16);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, 16px) scale(0.86);
+  background:
+    radial-gradient(circle, rgba(255, 250, 240, 0.68) 0%, rgba(255, 250, 240, 0.20) 38%, transparent 69%),
+    conic-gradient(from 42deg, transparent, rgba(184, 146, 74, 0.28), transparent 32%, transparent 68%, rgba(184, 146, 74, 0.22), transparent);
+  filter: blur(0.2px);
+}
+
+.ceremony__person {
+  position: absolute;
+  bottom: clamp(6.4rem, 12.2vh, 7.2rem);
+  width: auto;
+  height: clamp(430px, 72vh, 700px);
+  max-height: calc(100svh - 9.25rem);
+  object-fit: contain;
+  opacity: 0;
+  filter:
+    drop-shadow(0 18px 24px rgba(55, 38, 20, 0.12))
+    drop-shadow(0 5px 9px rgba(55, 38, 20, 0.12));
+  will-change: transform, opacity;
+}
+
+.ceremony__person--groom {
+  right: calc(50% - var(--ceremony-meet-overlap));
+  transform-origin: 62% 88%;
+}
+
+.ceremony__person--bride {
+  left: calc(50% - var(--ceremony-meet-overlap));
+  transform-origin: 38% 88%;
+}
+
+.ceremony__actions {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.9rem, 4.5vh, 3rem);
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  width: min(360px, calc(100vw - 2.5rem));
+  opacity: 0;
+  transform: translate3d(-50%, 12px, 0);
+  pointer-events: auto;
+}
+
+.ceremony__cta {
+  display: inline-block;
+  width: 100%;
+  padding: 0.82rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6b4a10;
+  text-decoration: none;
+  border: 1px solid var(--color-gold);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.ceremony__cta:hover {
+  background: var(--color-gold);
+  color: var(--color-white);
+}
+
+
+/* ══════════════════════════════════════════════════════
+   VENUE SECTION
+══════════════════════════════════════════════════════ */
+.venue {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem;
+  overflow: hidden;
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at 50% 0%,   rgba(184, 146, 74, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(184, 146, 74, 0.04) 0%, transparent 60%);
+}
+
+.venue__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* eyebrow label */
+.venue__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* divider — same pattern as hero */
+.venue__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.venue__divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-light), transparent);
+}
+
+.venue__divider-icon {
+  font-size: 0.65rem;
+  color: var(--color-gold);
+}
+
+/* venue name */
+.venue__name {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 8vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  color: #0f0804;
+  margin-top: -0.25rem;
+}
+
+.venue__locality {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #1a100a;
+  margin-top: -0.5rem;
+}
+
+/* thin horizontal rule used as separator */
+.venue__rule {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-light), transparent);
+  margin: 0.1rem 0;
+}
+
+/* ── date / address two-column row ── */
+.venue__meta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  max-width: 420px;
+}
+
+.venue__meta-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.venue__meta-sep {
+  width: 1px;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--color-gold-light), transparent);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.venue__meta-label {
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #6b4a10;
+  margin-bottom: 0.15rem;
+}
+
+.venue__meta-day {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.8vw, 1.25rem);
+  font-weight: 600;
+  font-style: italic;
+  color: #1a100a;
+}
+
+.venue__meta-date {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3.5vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #0f0804;
+  line-height: 1.2;
+}
+
+.venue__meta-time {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.venue__meta-addr {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  font-weight: 600;
+  font-style: italic;
+  color: #1a100a;
+  line-height: 1.75;
+}
+
+.venue__meta-addr--accent {
+  color: #8a6020;
+  font-weight: 700;
+}
+
+/* directions button — mirrors hero CTA */
+.venue__directions {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.75rem 2.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #6b4a10;
+  text-decoration: none;
+  border: 1px solid var(--color-gold);
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.venue__directions:hover {
+  background: var(--color-gold);
+  color: var(--color-white);
+}
+
+/* narrow phones: stack meta columns */
+@media (max-width: 640px) {
+  .venue__meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.55rem;
+    max-width: 100%;
+  }
+
+  .venue__meta-col {
+    flex: none;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .venue__meta-sep {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-gold-light), transparent);
+    align-self: center;
+  }
+
+  .venue__meta-label,
+  .venue__meta-day,
+  .venue__meta-date,
+  .venue__meta-time,
+  .venue__meta-addr {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 860px) {
+  .ceremony {
+    min-height: 100svh;
+    padding: 4.25rem 1rem 1.5rem;
+  }
+
+  .ceremony__actions {
+    bottom: clamp(1.55rem, 3.8vh, 2.5rem);
+    width: min(300px, calc(100vw - 3rem));
+  }
+
+  .ceremony__glow {
+    bottom: clamp(10rem, 21vh, 11.5rem);
+    width: min(390px, 88vw);
+    height: min(390px, 88vw);
+  }
+
+  .ceremony__person {
+    bottom: clamp(6rem, 11.5vh, 7rem);
+    height: clamp(360px, 58vh, 500px);
+    opacity: 0;
+  }
+
+  .ceremony__person--groom {
+    right: calc(50% - var(--ceremony-meet-overlap));
+  }
+
+  .ceremony__person--bride {
+    left: calc(50% - var(--ceremony-meet-overlap));
+  }
+}
+
+@media (max-width: 520px) {
+  .ceremony__person {
+    height: clamp(365px, 58vh, 490px);
+  }
+
+  .ceremony {
+    --ceremony-meet-overlap: clamp(26px, 7.5vw, 40px);
+  }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   EVENTS SECTION  — card layout
+══════════════════════════════════════════════════════ */
+.events {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(184, 146, 74, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(184, 146, 74, 0.05) 0%, transparent 55%),
+    var(--color-bg-alt);
+}
+
+/* ── inner container ── */
+.ev-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── eyebrow label ── */
+.ev-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+/* ── decorative rule (top divider + gap divider) ── */
+.ev-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ev-rule__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gold-light), transparent);
+}
+
+.ev-rule__gem {
+  font-size: 0.58rem;
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.ev-rule--gap {
+  margin: 0.5rem 0;
+}
+
+/* ── Day 1 section — peacock bg (image loaded via .section-bg) ── */
+.events--day1 {
+  background-color: var(--color-bg);
+}
+
+/* make cards semi-transparent so the bg art shows through */
+.events--day1 .ev-card {
+  background: rgba(255, 253, 249, 0.82);
+}
+
+.events--day1 .ev-day-hdr {
+  background: rgba(250, 247, 242, 0.75);
+}
+
+/* ══════════════════════════════════════════════════════
+   PROGRESSIVE BG IMAGE LOADER
+   .section-bg is a full-bleed absolutely-positioned child
+   that holds the bg image. It shows the LQIP blurred first,
+   then JS swaps to the full image and removes .is-loading.
+══════════════════════════════════════════════════════ */
+.section-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: #ecdcca;       /* warm ivory fallback */
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  /* blur transition: LQIP → full image */
+  filter: blur(18px);
+  transform: scale(1.06);          /* hide blur halo at edges */
+  transition: filter 0.7s ease, transform 0.7s ease;
+}
+
+.section-bg.is-loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
+
+@media (min-width: 640px) and (orientation: landscape),
+       (min-width: 900px) {
+  .section-bg {
+    background-size: auto 100%;
+    background-position: center center;
+  }
+}
+
+/* ── Edge-fade overlays ─────────────────────────────────
+   Applied to every section that carries a full-bleed bg image.
+   ::before fades the top edge, ::after the bottom, both towards
+   the page cream so neighbouring sections blend seamlessly.
+────────────────────────────────────────────────────────── */
+.hero::before,
+.events--day1::before,
+.events--day2::before,
+.venue::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(120px, 22vh, 220px);
+  background: linear-gradient(to bottom,
+    #ecdcca 0%,
+    rgba(236, 220, 202, 0.55) 55%,
+    transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero::after,
+.events--day1::after,
+.events--day2::after,
+.venue::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: clamp(120px, 22vh, 220px);
+  background: linear-gradient(to top,
+    #ecdcca 0%,
+    rgba(236, 220, 202, 0.55) 55%,
+    transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Day 2 — baraat bg (image loaded via .section-bg) */
+.events--day2 {
+  background-color: var(--color-bg);
+}
+
+.events--day2 .ev-card {
+  background: rgba(255, 253, 249, 0.82);
+}
+
+.events--day2 .ev-day-hdr {
+  background: rgba(250, 247, 242, 0.75);
+}
+
+/* ── day header strip ──────────────────────────────
+   Layout: [large num] [thin vertical bar] [month / day-name]
+   ─────────────────────────────────────────────────── */
+.ev-day-hdr {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.6rem 1rem;
+  border-left: 2px solid var(--color-gold-light);
+  background: rgba(250, 247, 242, 0.6);
+  margin-top: 0.25rem;
+}
+
+.ev-day-hdr--gold {
+  border-left-color: var(--color-gold);
+  background: rgba(184, 146, 74, 0.06);
+}
+
+.ev-day-hdr__num {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5.5vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text);
+  flex-shrink: 0;
+  min-width: 2ch;
+}
+
+.ev-day-hdr--gold .ev-day-hdr__num {
+  color: var(--color-gold);
+}
+
+.ev-day-hdr__bar {
+  width: 1px;
+  height: 32px;
+  background: var(--color-gold-light);
+  flex-shrink: 0;
+}
+
+.ev-day-hdr__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.ev-day-hdr__month {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.ev-day-hdr__name {
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+/* ── event card ─────────────────────────────────────
+   Layout: [circle icon 48px] [name (bold serif) + time]
+   Full-width row, subtle card background.
+   ─────────────────────────────────────────────────── */
+.ev-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1rem;
+  background: rgba(250, 247, 242, 0.8);
+  border: 1px solid rgba(184, 146, 74, 0.14);
+  border-radius: 3px;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.ev-card:hover {
+  border-color: rgba(184, 146, 74, 0.32);
+  box-shadow: 0 2px 12px rgba(184, 146, 74, 0.08);
+}
+
+.ev-card--wedding {
+  background: rgba(184, 146, 74, 0.06);
+  border-color: rgba(184, 146, 74, 0.30);
+  padding: 1rem;
+}
+
+.ev-card--wedding:hover {
+  border-color: rgba(184, 146, 74, 0.50);
+  box-shadow: 0 4px 20px rgba(184, 146, 74, 0.12);
+}
+
+/* icon circle */
+.ev-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold-light);
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ev-card__icon .material-icons-round {
+  font-size: 22px;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.ev-card__icon--gold {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  width: 52px;
+  height: 52px;
+  box-shadow: 0 0 0 3px rgba(184, 146, 74, 0.2);
+}
+
+.ev-card__icon--gold .material-icons-round {
+  color: var(--color-white);
+  font-size: 24px;
+}
+
+/* text area */
+.ev-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.ev-card__name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  font-weight: 700;
+  color: #1a100a;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.ev-card--wedding .ev-card__name {
+  font-size: clamp(1.15rem, 3.2vw, 1.35rem);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.ev-card__time {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #6b4a10;
+  margin: 0;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   UTILITY
+══════════════════════════════════════════════════════ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE — mobile-first tweaks
+══════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .hero__inner {
+    max-width: 100%;
+    gap: 1.6rem;
+    padding: 0 0.25rem;
+  }
+
+  .hero__prelude {
+    font-size: clamp(0.76rem, 3.2vw, 0.88rem);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .hero__names {
+    flex-direction: column;
+    gap: 0.35rem;
+    width: 100%;
+  }
+
+  .hero__name {
+    font-size: clamp(4.35rem, 19vw, 5.55rem);
+    font-weight: 400;
+    letter-spacing: 0.025em;
+    line-height: 0.98;
+  }
+
+  .hero__ampersand {
+    font-size: 2.7rem;
+    font-weight: 400;
+  }
+
+  .hero__date {
+    font-size: 1.08rem;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    color: var(--color-gold);
+  }
+
+  .hero__tagline {
+    font-size: clamp(1.23rem, 5.2vw, 1.45rem);
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--color-text);
+  }
+
+  .corner {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* safe area support (notched phones) */
+@supports (padding: max(0px)) {
+  #intro {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Desktop: portrait bg image — show at full height, centred ──
+   On wide viewports `cover` would zoom past the arch top; instead
+   we pin the image to 100% viewport-height so the full ornamental
+   frame is always visible, and let the dark maroon fill the flanks.
+*/
+@media (min-width: 640px) and (orientation: landscape),
+       (min-width: 900px) {
+  #intro {
+    background-size: auto 100%;
+    background-position: center center;
+  }
+
+}

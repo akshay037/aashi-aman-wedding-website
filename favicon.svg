@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- cream background -->
+  <rect width="64" height="64" fill="#faf7f2" rx="6"/>
+
+  <!-- outer frame -->
+  <rect x="3" y="3" width="58" height="58" fill="none"
+        stroke="#d4aa6a" stroke-width="1.2" rx="4" opacity="0.7"/>
+
+  <!-- corner ticks -->
+  <path d="M3,3 h10 M3,3 v10" stroke="#b8924a" stroke-width="1.5" fill="none"/>
+  <path d="M61,3 h-10 M61,3 v10" stroke="#b8924a" stroke-width="1.5" fill="none"/>
+  <path d="M3,61 h10 M3,61 v-10" stroke="#b8924a" stroke-width="1.5" fill="none"/>
+  <path d="M61,61 h-10 M61,61 v-10" stroke="#b8924a" stroke-width="1.5" fill="none"/>
+
+  <!-- R -->
+  <text x="32" y="25" font-family="Georgia,'Times New Roman',serif"
+        font-size="14" font-weight="400" fill="#2c2416"
+        text-anchor="middle" letter-spacing="1">R</text>
+
+  <!-- gold diamond ornament -->
+  <text x="32" y="37" font-family="Georgia,serif"
+        font-size="9" fill="#b8924a" text-anchor="middle">✦</text>
+
+  <!-- V -->
+  <text x="32" y="51" font-family="Georgia,'Times New Roman',serif"
+        font-size="14" font-weight="400" fill="#2c2416"
+        text-anchor="middle" letter-spacing="1">V</text>
+</svg>

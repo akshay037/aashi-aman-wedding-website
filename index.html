@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  IMPORTANT — before publishing / sharing:            ║
+  ║  1. Replace every "https://Amankivish.in" below     ║
+  ║     with your actual deployed URL.                   ║
+  ║  2. Open og-image.svg in a browser, screenshot it    ║
+  ║     at exactly 1200 × 630 px, and save as            ║
+  ║     og-image.png in this same folder.                ║
+  ║     WhatsApp & most platforms require PNG/JPG.       ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<html lang="en-IN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ══ Primary meta ══════════════════════════════════ -->
+  <title>Aman &amp; Aashi — Wedding Invitation | 09th July 2026</title>
+  <meta name="description"
+    content="You are cordially invited to celebrate the wedding of Aman &amp; Aashi on Thrusday, 9th July 2026 at Acasa ,the collective, CSN, Maharashtra." />
+  <meta name="keywords"
+    content="Aman Aashi Wedding, wedding invitation, 19 June 2026, Shirdi, Maharashtra, Tania President Inn" />
+  <meta name="author" content="Aman &amp; Aashi" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#b8924a" />
+  <link rel="canonical" href="https://Amankivish.in/" />
+
+  <!-- ══ Open Graph — used by WhatsApp, Facebook, etc. ═ -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://Amankivish.in/" />
+  <meta property="og:site_name" content="Aman &amp; Aashi Wedding" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:title" content="Aman &amp; Aashi — Wedding Invitation 💍" />
+  <meta property="og:description"
+    content="Join us on Friday, 19 June 2026 · Tania President Inn, Shirdi, Maharashtra. Two families, one beautiful beginning." />
+  <meta property="og:image" content="https://Amankivish.in/images/Aman_Aashi_meta_link_banner.jpeg" />
+  <meta property="og:image:secure_url" content="https://Amankivish.in/images/Aman_Aashi_meta_link_banner.jpeg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Aman & Aashi Wedding Invitation — 19 June 2026, Shirdi" />
+
+  <!-- ══ Twitter / X Card ══════════════════════════════ -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@yourtwitterhandle" />
+  <meta name="twitter:title" content="Aman &amp; Aashi — Wedding Invitation 💍" />
+  <meta name="twitter:description"
+    content="Join us on Friday, 19 June 2026 · Tania President Inn, Shirdi, Maharashtra." />
+  <meta name="twitter:image" content="https://Amankivish.in/images/Aman_Aashi_meta_link_banner.jpeg" />
+  <meta name="twitter:image:alt" content="Aman & Aashi Wedding Invitation — 19 June 2026" />
+
+  <!-- ══ Apple / iOS ═══════════════════════════════════ -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="A&amp;A Wedding" />
+  <link rel="apple-touch-icon" href="images/Aman_Aashi_meta_link_banner.jpeg" />
+
+  <!-- ══ Favicons ══════════════════════════════════════ -->
+  <!--  SVG favicon — modern browsers (Chrome 80+, Firefox 41+, Safari 12+) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <!--  PNG fallback — older browsers (generate favicon.png from favicon.svg) -->
+  <link rel="icon" type="image/png" href="favicon.svg" sizes="any" />
+  <!--  Shortcut icon for legacy IE / some Android browsers -->
+  <link rel="shortcut icon" href="favicon.svg" />
+
+  <!-- ══ Google Fonts ══════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- ══ Material Icons ════════════════════════════════ -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+
+  <!-- ══ GSAP ══════════════════════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" async></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" async></script>
+
+  <script src="constants.js"></script>
+  <link rel="stylesheet" href="style.css?v=1780515679" />
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       INTRO — Envelope opening screen
+       Sits fixed on top of everything; removed after
+       the animation completes.
+  ══════════════════════════════════════════════ -->
+  <div id="intro" role="dialog" aria-label="Your wedding invitation" aria-modal="true">
+
+    <!--
+      .env-shadow wraps only the envelope so filter:drop-shadow()
+      stays off .env itself — filter on a 3D ancestor flattens
+      all preserve-3d descendants, breaking the flap animation.
+    -->
+    <div class="env-shadow">
+      <div class="env" id="env" role="button" tabindex="0" aria-label="Tap to open your invitation">
+
+        <!-- Base pocket (back of envelope) -->
+        <div class="env__pocket"></div>
+
+        <!-- Three static fold triangles (left / right / bottom) -->
+        <div class="env__fold env__fold--l"></div>
+        <div class="env__fold env__fold--r"></div>
+        <div class="env__fold env__fold--b"></div>
+
+        <!-- Invitation card (hidden inside; slides up when flap opens) -->
+        <div class="env__card">
+          <span class="env__card-pre">The Wedding of</span>
+          <span class="env__card-names" id="couple-initials">A <em>&amp;</em> A</span>
+          <span class="env__card-year">2026</span>
+        </div>
+
+        <!--
+        Top flap — single element, no children.
+        clip-path lives here directly; GSAP drives rotateX via
+        transformPerspective (inline perspective) so there is no
+        preserve-3d / filter conflict.
+      -->
+        <div class="env__flap" id="envFlap"></div>
+
+        <!-- Wax seal -->
+        <div class="env__seal" id="envSeal">
+          <span class="env__seal-icon">✦</span>
+        </div>
+
+      </div><!-- /.env -->
+    </div><!-- /.env-shadow -->
+
+    <p class="env__hint" id="envHint">tap to open</p>
+
+    <button class="env__skip" id="envSkip" aria-label="Skip intro">skip</button>
+
+  </div><!-- /#intro -->
+
+
+  <!-- ══════════════════════════════════════════════
+       MAIN SITE (rendered behind #intro, revealed
+       after the envelope animation ends)
+  ══════════════════════════════════════════════ -->
+
+  <!-- ── NAV ── -->
+  <nav class="site-nav">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#venue">Venue</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO SECTION ── -->
+  <section id="home" class="hero">
+    <div class="section-bg" data-bg="images/bg_front_1.jpeg"
+      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIAafigdKWkMidc0VIelFAAKWmKafmgBDRTWOKKAGqadmoQTxS7jk80CHtzRUTMcdaKBn//Z">
+    </div>
+    <div class="hero__inner">
+      <img src="images/ganpati.png" alt="Shree Ganesh" class="hero__ganpati" />
+      <P>With the blessings of grandparents <br></P>
+      <p class="hero__parents">SHRIRANGJI AGRAWAL &amp; Late SUSHILADEVI AGRAWAL</p>
+      <!-- <BR></BR> -->
+
+      <p class="hero__parents">MR. AJAY AGRAWAL &amp; MRS.SHEETAL AGRAWAL</p>
+      <p class="hero__prelude">cordially invite you to celebrate the<br>marriage of their daughter</p>
+      <div class="hero__names">
+        <span class="hero__name" id="bride-name">AASHI</span>
+        <span class="hero__ampersand">&amp;</span>
+        <span class="hero__name" id="groom-name">AMAN</span>
+      </div>
+      <p class="hero__prelude hero__prelude--son">son of</p>
+      <p class="hero__parents">MR. VIJAYJI AGRAWAL &amp; MRS.SUNITAJI AGRAWAL</p>
+      <p class="hero__parents">G/S/o Late MOHANLALJI AGRAWAL &amp; SAU.KANCHANDEVI AGRAWAL</p>
+
+
+      <p class="hero__date">09th July 2026</p>
+
+      <div class="hero__divider">
+        <span class="hero__divider-line"></span>
+        <span class="hero__divider-icon">✦</span>
+        <span class="hero__divider-line"></span>
+      </div>
+
+      <p class="hero__tagline">Request the pleasure of your company<br />as they begin their forever</p>
+
+      <a href="#events" class="hero__cta" id="heroCta">Check Events</a>
+    </div>
+
+    <!-- decorative corner flourishes -->
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+  </section>
+
+  <!-- ── CEREMONY ANIMATION SECTION ── -->
+  <section id="ceremony" class="ceremony">
+    <div class="ceremony__stage" aria-hidden="true">
+      <div class="ceremony__glow"></div>
+      <img class="ceremony__person ceremony__person--groom" src="images/groom_1.png" width="401" height="713" alt="" />
+      <img class="ceremony__person ceremony__person--bride" src="images/bride_1.png" width="401" height="713" alt="" />
+    </div>
+
+    <div class="ceremony__actions">
+      <a href="#events" class="ceremony__cta">View Events</a>
+    </div>
+
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+  </section>
+
+  <!-- ── EVENTS SECTION ── -->
+  <!-- ── EVENTS DAY 1 ── -->
+  <section id="events" class="events events--day1">
+    <div class="section-bg" data-bg="images/event_bg_1.jpeg"
+      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIO9PxSKMCnUhkbjHIopzDiikMFPFOpinpT6YhrdKKRjRSGhinn2qTPFQkkYxUn8PemA1jzg0Uj8ZopAf//Z">
+    </div>
+    <div class="ev-inner">
+
+      <p class="ev-eyebrow">Events &amp; Timing</p>
+      <div class="ev-rule">
+        <span class="ev-rule__line"></span>
+        <span class="ev-rule__gem">✦</span>
+        <span class="ev-rule__line"></span>
+      </div>
+
+      <div class="ev-day-hdr">
+        <span class="ev-day-hdr__num">08</span>
+        <span class="ev-day-hdr__bar"></span>
+        <div class="ev-day-hdr__info">
+          <span class="ev-day-hdr__month">July 2026</span>
+          <span class="ev-day-hdr__name">Thursday</span>
+        </div>
+      </div>
+
+      <!-- <div class="ev-card">
+        <div class="ev-card__icon"><span class="material-icons-round">spa</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Mayra Ceremony</p>
+          <p class="ev-card__time">03:30 PM Onwards</p>
+        </div>
+      </div> -->
+
+      <!-- <div class="ev-card">
+        <div class="ev-card__icon"><span class="material-icons-round">celebration</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Carnival</p>
+          <p class="ev-card__time">11:30 AM Onwards</p>
+        </div>
+      </div> -->
+
+      <div class="ev-card">
+        <div class="ev-card__icon"><span class="material-icons-round">redeem</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Mayra Ceremony</p>
+          <p class="ev-card__time">03:30 PM Onwards</p>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card__icon"><span class="material-icons-round">music_note</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Sangeet Ceremony</p>
+          <p class="ev-card__time">7:00 PM Onwards</p>
+        </div>
+      </div>
+
+    </div><!-- /.ev-inner -->
+
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+  </section>
+
+  <!-- ── EVENTS DAY 2 ── -->
+  <section id="events-day2" class="events events--day2">
+    <div class="section-bg" data-bg="images/bg_day_2.jpeg"
+      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AnjXgHvT9oznvSR8qKfSGRSLkUU6ThTRSGCHin1ErYqSmIR/umimM3JGKKQxitjAqXdxUA6VMBmPPtQBGxwaKaeRRQB//2Q==">
+    </div>
+    <div class="ev-inner">
+
+      <div class="ev-rule">
+        <span class="ev-rule__line"></span>
+        <span class="ev-rule__gem">✦</span>
+        <span class="ev-rule__line"></span>
+      </div>
+
+      <div class="ev-day-hdr">
+        <span class="ev-day-hdr__num">09</span>
+        <span class="ev-day-hdr__bar"></span>
+        <div class="ev-day-hdr__info">
+          <span class="ev-day-hdr__month">July 2026</span>
+          <span class="ev-day-hdr__name">Thursday</span>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card__icon ev-card__icon--gold"><span class="material-icons-round">local_florist</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Varmala</p>
+          <p class="ev-card__time">12:30 PM Onwards</p>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card__icon ev-card__icon--gold"><span class="material-icons-round">local_florist</span></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Phere</p>
+          <p class="ev-card__time"> 1:15 PM Onwards</p>
+        </div>
+      </div>
+
+      <div class="ev-card">
+        <div class="ev-card__icon ev-card__icon--gold"><img
+            src="https://cdn-icons-png.flaticon.com/512/15868/15868511.png" alt="Reception Icon"
+            style="width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1);"></div>
+        <div class="ev-card__body">
+          <p class="ev-card__name">Reception</p>
+          <p class="ev-card__time">07:30 PM Onwards</p>
+        </div>
+      </div>
+
+    </div><!-- /.ev-inner -->
+
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+  </section>
+
+  <!-- ── VENUE SECTION ── -->
+  <section id="venue" class="venue">
+    <div class="section-bg" data-bg="images/bg_venue_1.jpeg"
+      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIoxT8UDpS0hkUi0VI33aKQAKWmqaUmmAE0UwniigBEyR1FPxx71ApOOtOycdaQCtkDtRTQecdqKBn//2Q==">
+    </div>
+    <div class="venue__inner">
+
+      <p class="venue__eyebrow">Venue</p>
+
+      <div class="venue__divider">
+        <span class="venue__divider-line"></span>
+        <span class="venue__divider-icon">✦</span>
+        <span class="venue__divider-line"></span>
+      </div>
+
+      <h3 class="venue__name ">Acasa</h3>
+      <h4 class="venue__name " style="font-style: italic;">The Collective</h4>
+      <p class="venue__locality">Beed by Pass</p>
+      <p class="venue__locality">Chh.Sambhajinagar(Aurangabad), Maharashtra</p>
+
+      <div class="venue__rule"></div>
+
+      <!-- Date & Time row
+      <div class="venue__meta">
+        <div class="venue__meta-col">
+          <span class="venue__meta-label">When</span>
+          <span class="venue__meta-day">wednesday- Thursday</span>
+          <span class="venue__meta-date">18 - 19 June 2026</span>
+          <span class="venue__meta-time">10:30 AM Onwards</span>
+        </div> -->
+
+      <div class="venue__meta-sep"></div>
+
+      <div class="venue__meta-col">
+        <span class="venue__meta-label">A Note</span>
+        <span class="venue__meta-addr">Your presence will make</span>
+        <span class="venue__meta-addr">this celebration</span>
+        <span class="venue__meta-addr venue__meta-addr--accent">truly special</span>
+      </div>
+    </div>
+
+    <div class="venue__rule"></div>
+
+    </div>
+
+    <!-- decorative corner flourishes (reuse hero corner classes) -->
+    <div class="corner corner--tl"></div>
+    <div class="corner corner--tr"></div>
+    <div class="corner corner--bl"></div>
+    <div class="corner corner--br"></div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="script.js?v=1780342415"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById('bride-name').innerText = WEDDING_CONSTANTS.brideName;
+      document.getElementById('groom-name').innerText = WEDDING_CONSTANTS.groomName;
+      document.getElementById('couple-initials').innerHTML = `${WEDDING_CONSTANTS.brideInitial} <em>&amp;</em> ${WEDDING_CONSTANTS.groomInitial}`;
+    });
+  </script>
+</body>
+
+</html>

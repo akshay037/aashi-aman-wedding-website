@@ -81,6 +81,7 @@
 
   <script src="constants.js"></script>
   <link rel="stylesheet" href="style.css?v=1780515679" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -213,169 +214,39 @@
     <div class="corner corner--br"></div>
   </section>
 
-  <!-- ── EVENTS SECTION ── -->
-  <!-- ── EVENTS DAY 1 ── -->
-  <section id="events" class="events events--day1">
-    <div class="section-bg" data-bg="images/event_bg_1.jpeg"
-      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIO9PxSKMCnUhkbjHIopzDiikMFPFOpinpT6YhrdKKRjRSGhinn2qTPFQkkYxUn8PemA1jzg0Uj8ZopAf//Z">
-    </div>
-    <div class="ev-inner">
-
-      <p class="ev-eyebrow">Events &amp; Timing</p>
-      <div class="ev-rule">
-        <span class="ev-rule__line"></span>
-        <span class="ev-rule__gem">✦</span>
-        <span class="ev-rule__line"></span>
-      </div>
-
-      <div class="ev-day-hdr">
-        <span class="ev-day-hdr__num">08</span>
-        <span class="ev-day-hdr__bar"></span>
-        <div class="ev-day-hdr__info">
-          <span class="ev-day-hdr__month">July 2026</span>
-          <span class="ev-day-hdr__name">Thursday</span>
-        </div>
-      </div>
-
-      <!-- <div class="ev-card">
-        <div class="ev-card__icon"><span class="material-icons-round">spa</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Mayra Ceremony</p>
-          <p class="ev-card__time">03:30 PM Onwards</p>
-        </div>
-      </div> -->
-
-      <!-- <div class="ev-card">
-        <div class="ev-card__icon"><span class="material-icons-round">celebration</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Carnival</p>
-          <p class="ev-card__time">11:30 AM Onwards</p>
-        </div>
-      </div> -->
-
-      <div class="ev-card">
-        <div class="ev-card__icon"><span class="material-icons-round">redeem</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Mayra Ceremony</p>
-          <p class="ev-card__time">03:30 PM Onwards</p>
-        </div>
-      </div>
-
-      <div class="ev-card">
-        <div class="ev-card__icon"><span class="material-icons-round">music_note</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Sangeet Ceremony</p>
-          <p class="ev-card__time">7:00 PM Onwards</p>
-        </div>
-      </div>
-
-    </div><!-- /.ev-inner -->
-
-    <div class="corner corner--tl"></div>
-    <div class="corner corner--tr"></div>
-    <div class="corner corner--bl"></div>
-    <div class="corner corner--br"></div>
-  </section>
-
-  <!-- ── EVENTS DAY 2 ── -->
-  <section id="events-day2" class="events events--day2">
-    <div class="section-bg" data-bg="images/bg_day_2.jpeg"
-      data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AnjXgHvT9oznvSR8qKfSGRSLkUU6ThTRSGCHin1ErYqSmIR/umimM3JGKKQxitjAqXdxUA6VMBmPPtQBGxwaKaeRRQB//2Q==">
-    </div>
-    <div class="ev-inner">
-
-      <div class="ev-rule">
-        <span class="ev-rule__line"></span>
-        <span class="ev-rule__gem">✦</span>
-        <span class="ev-rule__line"></span>
-      </div>
-
-      <div class="ev-day-hdr">
-        <span class="ev-day-hdr__num">09</span>
-        <span class="ev-day-hdr__bar"></span>
-        <div class="ev-day-hdr__info">
-          <span class="ev-day-hdr__month">July 2026</span>
-          <span class="ev-day-hdr__name">Thursday</span>
-        </div>
-      </div>
-
-      <div class="ev-card">
-        <div class="ev-card__icon ev-card__icon--gold"><span class="material-icons-round">local_florist</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Varmala</p>
-          <p class="ev-card__time">12:30 PM Onwards</p>
-        </div>
-      </div>
-
-      <div class="ev-card">
-        <div class="ev-card__icon ev-card__icon--gold"><span class="material-icons-round">local_florist</span></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Phere</p>
-          <p class="ev-card__time"> 1:15 PM Onwards</p>
-        </div>
-      </div>
-
-      <div class="ev-card">
-        <div class="ev-card__icon ev-card__icon--gold"><img
-            src="https://cdn-icons-png.flaticon.com/512/15868/15868511.png" alt="Reception Icon"
-            style="width: 28px; height: 28px; object-fit: contain; filter: brightness(0) invert(1);"></div>
-        <div class="ev-card__body">
-          <p class="ev-card__name">Reception</p>
-          <p class="ev-card__time">07:30 PM Onwards</p>
-        </div>
-      </div>
-
-    </div><!-- /.ev-inner -->
-
-    <div class="corner corner--tl"></div>
-    <div class="corner corner--tr"></div>
-    <div class="corner corner--bl"></div>
-    <div class="corner corner--br"></div>
-  </section>
-
-  <!-- ── VENUE SECTION ── -->
-  <section id="venue" class="venue">
+  <!-- ── DATE & VENUE SCRATCH-OFF ── -->
+  <section id="interactive-venue" class="venue">
     <div class="section-bg" data-bg="images/bg_venue_1.jpeg"
       data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIoxT8UDpS0hkUi0VI33aKQAKWmqaUmmAE0UwniigBEyR1FPxx71ApOOtOycdaQCtkDtRTQecdqKBn//2Q==">
     </div>
-    <div class="venue__inner">
-
-      <p class="venue__eyebrow">Venue</p>
-
-      <div class="venue__divider">
-        <span class="venue__divider-line"></span>
-        <span class="venue__divider-icon">✦</span>
-        <span class="venue__divider-line"></span>
-      </div>
-
-      <h3 class="venue__name ">Acasa</h3>
-      <h4 class="venue__name " style="font-style: italic;">The Collective</h4>
-      <p class="venue__locality">Beed by Pass</p>
-      <p class="venue__locality">Chh.Sambhajinagar(Aurangabad), Maharashtra</p>
-
-      <div class="venue__rule"></div>
-
-      <!-- Date & Time row
-      <div class="venue__meta">
+    
+    <div class="scratch-container" id="scratchContainer">
+      <!-- Venue (Base Layer) -->
+      <div class="venue-content">
+        <p class="venue__eyebrow">Date &amp; Venue</p>
+        <div class="venue__divider">
+          <span class="venue__divider-line"></span>
+          <span class="venue__divider-icon">✦</span>
+          <span class="venue__divider-line"></span>
+        </div>
+        <h3 class="venue__name" style="font-size: 2.2rem; margin-bottom: 0.5rem;">09 July 2026</h3>
+        <h4 class="venue__name" style="font-size: 1.5rem; font-style: italic; margin-bottom: 1.5rem;">7:30 PM</h4>
+        <div class="venue__rule"></div>
+        <h3 class="venue__name">Acasa</h3>
+        <h4 class="venue__name" style="font-style: italic;">The Collective</h4>
+        <p class="venue__locality">Beed by Pass</p>
+        <p class="venue__locality">Chh.Sambhajinagar (Aurangabad), Maharashtra</p>
+        <div class="venue__rule"></div>
         <div class="venue__meta-col">
-          <span class="venue__meta-label">When</span>
-          <span class="venue__meta-day">wednesday- Thursday</span>
-          <span class="venue__meta-date">18 - 19 June 2026</span>
-          <span class="venue__meta-time">10:30 AM Onwards</span>
-        </div> -->
-
-      <div class="venue__meta-sep"></div>
-
-      <div class="venue__meta-col">
-        <span class="venue__meta-label">A Note</span>
-        <span class="venue__meta-addr">Your presence will make</span>
-        <span class="venue__meta-addr">this celebration</span>
-        <span class="venue__meta-addr venue__meta-addr--accent">truly special</span>
+          <span class="venue__meta-label">A Note</span>
+          <span class="venue__meta-addr">Your presence will make</span>
+          <span class="venue__meta-addr">this celebration</span>
+          <span class="venue__meta-addr venue__meta-addr--accent">truly special</span>
+        </div>
       </div>
-    </div>
-
-    <div class="venue__rule"></div>
-
+      
+      <!-- Scratch Layer Canvas -->
+      <canvas id="scratchCanvas"></canvas>
     </div>
 
     <!-- decorative corner flourishes (reuse hero corner classes) -->
@@ -385,7 +256,33 @@
     <div class="corner corner--br"></div>
   </section>
 
+  <!-- ── GALLERY CAROUSEL ── -->
+  <section id="gallery" class="gallery">
+    <div class="gallery__inner">
+      <p class="gallery__eyebrow">Memories</p>
+      <div class="gallery__divider">
+        <span class="gallery__divider-line"></span>
+        <span class="gallery__divider-icon">✦</span>
+        <span class="gallery__divider-line"></span>
+      </div>
+      
+      <!-- Swiper -->
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0037.jpg" alt="Wedding Image 1"></div>
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0060(1).jpg" alt="Wedding Image 2"></div>
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0069(1).jpg" alt="Wedding Image 3"></div>
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0102(1).jpg" alt="Wedding Image 4"></div>
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0131(1).jpg" alt="Wedding Image 5"></div>
+          <div class="swiper-slide"><img src="wed-images/IMG-20260615-WA0142.jpg" alt="Wedding Image 6"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="script.js?v=1780342415"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {

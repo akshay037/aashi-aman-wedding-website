@@ -485,48 +485,123 @@ window.addEventListener('load', () => {
   gsap.registerPlugin(ScrollTrigger);
   initCeremonyScene();
 
-  const evSection = document.getElementById('events');
-  if (!evSection) return;
+  /* ──────────────────────────────────────────────────────
+     Scratch-off Logic
+  ─────────────────────────────────────────────────────── */
+  const canvas = document.getElementById("scratchCanvas");
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    let isDrawing = false;
+    let isRevealed = false;
+    
+    // Set canvas dimensions
+    const resizeCanvas = () => {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+      
+      if (!isRevealed) {
+        // Draw Overlay Layer
+        ctx.fillStyle = "#b8924a"; // theme gold color
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw Hint Text only
+        ctx.font = "italic 16px 'Cormorant Garamond', serif";
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("(Scratch to reveal details)", canvas.width / 2, canvas.height / 2);
+      }
+    };
+    
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-  const st = (start) => ({
-    trigger: evSection,
-    start: start || 'top 80%',
-    toggleActions: 'play none none none',
-  });
+    // Scratching function
+    const getBrushPos = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    };
 
-  /* 1. eyebrow + top rule */
-  gsap.from(['#events .ev-eyebrow', '#events .ev-rule:first-of-type'], {
-    scrollTrigger: st('top 85%'),
-    opacity: 0, y: 12,
-    duration: 0.65, stagger: 0.15,
-    ease: 'power2.out',
-  });
+    const startScratch = (e) => {
+      if (isRevealed) return;
+      isDrawing = true;
+      scratch(e);
+    };
 
-  /* 2. day headers — slide up */
-  gsap.from('#events .ev-day-hdr', {
-    scrollTrigger: st('top 80%'),
-    opacity: 0, y: 16,
-    duration: 0.6, stagger: 0.2,
-    delay: 0.2,
-    ease: 'power2.out',
-  });
+    const endScratch = () => {
+      isDrawing = false;
+      checkRevealPercentage();
+    };
 
-  /* 3. event cards — staggered fade + lift */
-  gsap.from('#events .ev-card', {
-    scrollTrigger: st('top 78%'),
-    opacity: 0, y: 20,
-    duration: 0.5, stagger: 0.1,
-    delay: 0.35,
-    ease: 'power2.out',
-  });
+    const scratch = (e) => {
+      if (!isDrawing || isRevealed) return;
+      if (e.cancelable) e.preventDefault();
+      
+      const pos = getBrushPos(e);
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 40, 0, 2 * Math.PI); // 40px brush size
+      ctx.fill();
+    };
 
-  /* 4. gap rule — grow from centre */
-  gsap.from('#events .ev-rule--gap', {
-    scrollTrigger: st('top 78%'),
-    opacity: 0, scaleX: 0,
-    duration: 0.55,
-    delay: 0.3,
-    ease: 'power2.out',
-    transformOrigin: 'center',
-  });
+    // Check if scratched enough (e.g. > 50%)
+    const checkRevealPercentage = () => {
+      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let transparentPixels = 0;
+      
+      for (let i = 3; i < pixels.length; i += 4) {
+        if (pixels[i] === 0) transparentPixels++;
+      }
+      
+      const clearPercentage = (transparentPixels / (pixels.length / 4)) * 100;
+      if (clearPercentage > 50) {
+        isRevealed = true;
+        canvas.style.opacity = 0;
+        setTimeout(() => {
+          canvas.style.pointerEvents = "none";
+        }, 1000);
+      }
+    };
+
+    canvas.addEventListener("mousedown", startScratch);
+    canvas.addEventListener("mousemove", scratch);
+    window.addEventListener("mouseup", endScratch);
+    
+    canvas.addEventListener("touchstart", startScratch, { passive: false });
+    canvas.addEventListener("touchmove", scratch, { passive: false });
+    window.addEventListener("touchend", endScratch);
+  }
+
+  /* ──────────────────────────────────────────────────────
+     Swiper Carousel Init
+  ─────────────────────────────────────────────────────── */
+  if (typeof Swiper !== 'undefined') {
+    new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      coverflowEffect: {
+        rotate: 30,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      }
+    });
+  }
 }, { once: true });

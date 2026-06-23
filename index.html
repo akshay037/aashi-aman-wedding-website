@@ -148,8 +148,9 @@
   <nav class="site-nav">
     <ul>
       <li><a href="#home">Home</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#venue">Venue</a></li>
+      <!-- <li><a href="#interactive-venue">When</a></li>
+      <li><a href="#location">Where</a></li>
+      <li><a href="#gallery">Our Moments</a></li> -->
     </ul>
   </nav>
 
@@ -176,7 +177,7 @@
       <p class="hero__parents">G/S/o Late MOHANLALJI AGRAWAL &amp; SAU.KANCHANDEVI AGRAWAL</p>
 
 
-      <p class="hero__date">09th July 2026</p>
+      <!-- <p class="hero__date">09th July 2026</p> -->
 
       <div class="hero__divider">
         <span class="hero__divider-line"></span>
@@ -186,7 +187,7 @@
 
       <p class="hero__tagline">Request the pleasure of your company<br />as they begin their forever</p>
 
-      <a href="#events" class="hero__cta" id="heroCta">Check Events</a>
+      <!-- <a href="#interactive-venue" class="hero__cta" id="heroCta">When</a> -->
     </div>
 
     <!-- decorative corner flourishes -->
@@ -204,9 +205,9 @@
       <img class="ceremony__person ceremony__person--bride" src="images/bride_1.png" width="401" height="713" alt="" />
     </div>
 
-    <div class="ceremony__actions">
-      <a href="#events" class="ceremony__cta">View Events</a>
-    </div>
+    <!-- <div class="ceremony__actions">
+      <a href="#gallery" class="ceremony__cta">Our Moments</a>
+    </div> -->
 
     <div class="corner corner--tl"></div>
     <div class="corner corner--tr"></div>
@@ -219,7 +220,7 @@
     <div class="section-bg" data-bg="images/bg_venue_1.jpeg"
       data-lqip="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2NjIpLCBxdWFsaXR5ID0gMTAK/9sAQwBQNzxGPDJQRkFGWlVQX3jIgnhubnj1r7mRyP///////////////////////////////////////////////////9sAQwFVWlp4aXjrgoLr/////////////////////////////////////////////////////////////////////////8AAEQgAKwAYAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8AsIoxT8UDpS0hkUi0VI33aKQAKWmqaUmmAE0UwniigBEyR1FPxx71ApOOtOycdaQCtkDtRTQecdqKBn//2Q==">
     </div>
-    
+
     <div class="scratch-container" id="scratchContainer">
       <!-- Venue (Base Layer) -->
       <div class="venue-content">
@@ -231,20 +232,26 @@
         </div>
         <h3 class="venue__name" style="font-size: 2.2rem; margin-bottom: 0.5rem;">09 July 2026</h3>
         <h4 class="venue__name" style="font-size: 1.5rem; font-style: italic; margin-bottom: 1.5rem;">7:30 PM</h4>
-        <div class="venue__rule"></div>
-        <h3 class="venue__name">Acasa</h3>
-        <h4 class="venue__name" style="font-style: italic;">The Collective</h4>
-        <p class="venue__locality">Beed by Pass</p>
-        <p class="venue__locality">Chh.Sambhajinagar (Aurangabad), Maharashtra</p>
-        <div class="venue__rule"></div>
-        <div class="venue__meta-col">
-          <span class="venue__meta-label">A Note</span>
-          <span class="venue__meta-addr">Your presence will make</span>
-          <span class="venue__meta-addr">this celebration</span>
-          <span class="venue__meta-addr venue__meta-addr--accent">truly special</span>
+        <div class="countdown" id="weddingCountdown">
+          <div class="countdown-item">
+            <span class="countdown-value" id="cd-days">00</span>
+            <span class="countdown-label">Days</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="cd-hours">00</span>
+            <span class="countdown-label">Hours</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="cd-minutes">00</span>
+            <span class="countdown-label">Mins</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-value" id="cd-seconds">00</span>
+            <span class="countdown-label">Secs</span>
+          </div>
         </div>
       </div>
-      
+
       <!-- Scratch Layer Canvas -->
       <canvas id="scratchCanvas"></canvas>
     </div>
@@ -256,6 +263,32 @@
     <div class="corner corner--br"></div>
   </section>
 
+  <!-- ── LOCATION MAP ── -->
+  <section id="location" class="location-section">
+    <div class="location__inner">
+      <p class="location__eyebrow">Location</p>
+      <div class="location__divider">
+        <span class="location__divider-line"></span>
+        <span class="location__divider-icon">✦</span>
+        <span class="location__divider-line"></span>
+      </div>
+
+      <div class="location__details">
+        <h3 class="location__name">Acasa</h3>
+        <h4 class="location__name" style="font-style: italic;">The Collective</h4>
+        <p class="location__locality">Beed by Pass</p>
+        <p class="location__locality">Chh.Sambhajinagar (Aurangabad), Maharashtra</p>
+      </div>
+
+      <div class="location__map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.723101779499!2d75.3224020752252!3d19.85166578151915!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdb99005fcc9a7f%3A0xb2f26f253568ba9d!2sAcasa%20The%20Collective!5e0!3m2!1sen!2sin!4v1782194651498!5m2!1sen!2sin"
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- ── GALLERY CAROUSEL ── -->
   <section id="gallery" class="gallery">
     <div class="gallery__inner">
@@ -265,7 +298,7 @@
         <span class="gallery__divider-icon">✦</span>
         <span class="gallery__divider-line"></span>
       </div>
-      
+
       <!-- Swiper -->
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">

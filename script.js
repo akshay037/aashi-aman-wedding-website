@@ -50,16 +50,16 @@ if (nav) {
   }, { passive: true });
 }
 
-/* ── "Check Events" — scroll to ceremony (animated) section first ── */
+/* ── "When" CTA — scroll to interactive venue section ── */
 document.querySelector('.hero__cta')?.addEventListener('click', e => {
   e.preventDefault();
-  document.getElementById('ceremony')?.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('interactive-venue')?.scrollIntoView({ behavior: 'smooth' });
 });
 
-/* ── "View Events" — scroll to events section ── */
+/* ── "Our Moments" CTA — scroll to gallery section ── */
 document.querySelector('.ceremony__cta')?.addEventListener('click', e => {
   e.preventDefault();
-  document.getElementById('events')?.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('gallery')?.scrollIntoView({ behavior: 'smooth' });
 });
 
 /* ── Nudge the hero CTA after 5 s if the user hasn't scrolled yet ── */
@@ -603,5 +603,41 @@ window.addEventListener('load', () => {
         disableOnInteraction: false,
       }
     });
+  }
+
+  /* ──────────────────────────────────────────────────────
+     Countdown Timer Logic
+  ─────────────────────────────────────────────────────── */
+  const countdownDate = new Date("July 09, 2026 19:30:00").getTime();
+  
+  const updateCountdown = () => {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
+    
+    if (distance < 0) {
+      const countdownEl = document.getElementById("weddingCountdown");
+      if (countdownEl) countdownEl.innerHTML = "<h3 style='font-family: var(--font-serif); font-size: 2rem; color: var(--color-gold);'>It's Time!</h3>";
+      return;
+    }
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    const dEl = document.getElementById("cd-days");
+    const hEl = document.getElementById("cd-hours");
+    const mEl = document.getElementById("cd-minutes");
+    const sEl = document.getElementById("cd-seconds");
+    
+    if (dEl) dEl.innerText = days.toString().padStart(2, '0');
+    if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
+    if (mEl) mEl.innerText = minutes.toString().padStart(2, '0');
+    if (sEl) sEl.innerText = seconds.toString().padStart(2, '0');
+  };
+  
+  if (document.getElementById("weddingCountdown")) {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
   }
 }, { once: true });
